@@ -2,9 +2,9 @@ using FeatureToggles.Domain;
 
 namespace FeatureToggles.WebApi.Config
 {
-    public class FeatureTogglesConfigurationSection
+    public class FeatureToggleOptions
     {
-        public bool FirstFeatureIsEnabled { get; set; }
+        public bool IsFirstFeatureEnabled { get; set; }
         public SecondFeatureVariant SecondFeatureVariant { get; set; }
     }
 }

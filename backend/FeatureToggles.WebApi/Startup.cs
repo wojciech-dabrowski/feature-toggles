@@ -1,6 +1,5 @@
 ﻿using FeatureToggles.Domain;
 using FeatureToggles.WebApi.Config;
-using FeatureToggles.WebApi.FeatureToggles;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,24 +12,16 @@ namespace FeatureToggles.WebApi
     {
         private readonly IConfiguration _configuration;
 
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                         .SetBasePath(env.ContentRootPath)
-                         .AddJsonFile("appsettings.json", true, true)
-                         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
-                         .AddEnvironmentVariables("FEATURE_TOGGLES_");
-
-            _configuration = builder.Build();
+            _configuration = configuration;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.Configure<FeatureTogglesConfigurationSection>(_configuration.GetSection("FeatureToggles"));
-            services.AddSingleton<IFeatureToggleConfigurationReader, FeatureToggleEnvironmentVariablesReader>();
-            // services.AddSingleton<IFeatureToggleConfigurationReader, FeatureToggleConfigFileReader>();
+            services.Configure<FeatureToggleOptions>(_configuration.GetSection("FeatureToggles"));
             services.AddSingleton<SecondFeatureBusinessLogicClass>();
         }
 
