@@ -1,6 +1,6 @@
 using System.Net;
 using FeatureToggles.Domain;
-using FeatureToggles.WebApi.FeatureToggles;
+using FeatureToggles.WebApi.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -9,27 +9,29 @@ namespace FeatureToggles.WebApi.Controllers
     [Route("api/[controller]/[action]")]
     public class ResourceController : ControllerBase
     {
-        private readonly IFeatureToggleConfigurationReader _featureToggleConfigurationReader;
+        private readonly FeatureToggleOptions _featureToggles;
         private readonly SecondFeatureBusinessLogicClass _secondFeatureBusinessLogicClass;
 
-        public ResourceController(IFeatureToggleConfigurationReader featureToggleConfigurationReader, SecondFeatureBusinessLogicClass secondFeatureBusinessLogicOptions)
+        public ResourceController(
+            IOptionsSnapshot<FeatureToggleOptions> featureToggles,
+            SecondFeatureBusinessLogicClass secondFeatureBusinessLogicOptions)
         {
-            _featureToggleConfigurationReader = featureToggleConfigurationReader;
+            _featureToggles = featureToggles.Value;
             _secondFeatureBusinessLogicClass = secondFeatureBusinessLogicOptions;
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult FirstFeature()
-            => _featureToggleConfigurationReader.IsFirstFeatureEnabled
+            => _featureToggles.IsFirstFeatureEnabled
                    ? Ok()
                    : StatusCode((int) HttpStatusCode.MethodNotAllowed);
 
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult SecondFeature()
             => Ok(
                 _secondFeatureBusinessLogicClass
-                   .SomeSecondFeatureAction(_featureToggleConfigurationReader.SecondFeatureVariant)
+                   .SomeSecondFeatureAction(_featureToggles.SecondFeatureVariant)
             );
     }
 }
