@@ -1,4 +1,5 @@
-﻿using FeatureToggles.WebApi.Config;
+﻿using System.Net;
+using FeatureToggles.WebApi.Config;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -16,7 +17,7 @@ namespace FeatureToggles.WebApi.Controllers
         }
 
         [HttpGet]
-        public FeatureToggleOptions Get()
+        public ActionResult<FeatureToggleOptions> Get()
             => _featureToggles;
     }
 }
