@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContentWrapper from "./SnackbarContentWrapper";
 
-function App() {
+function App({ featureToggles }) {
   const [openFeature1, setOpenFeature1] = React.useState(false);
   const [openFeature2, setOpenFeature2] = React.useState(false);
   const [openFeature3, setOpenFeature3] = React.useState(false);
@@ -35,26 +35,30 @@ function App() {
 
   return (
     <div className="App">
-      <div className="button-container">
-        <Button onClick={handleClick1} variant="contained" color="default">
-          Feature 1
-        </Button>
-        <Snackbar
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center"
-          }}
-          open={openFeature1}
-          autoHideDuration={4000}
-          onClose={handleClose1}
-        >
-          <SnackbarContentWrapper
-            onClose={handleClose1}
-            variant="success"
-            message="Feature 1 is enabled"
-          />
-        </Snackbar>
-      </div>
+      {
+        featureToggles.isFirstFeatureEnabled && (
+          <div className="button-container">
+            <Button onClick={handleClick1} variant="contained" color="default">
+              Feature 1
+            </Button>
+            <Snackbar
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center"
+              }}
+              open={openFeature1}
+              autoHideDuration={4000}
+              onClose={handleClose1}
+            >
+              <SnackbarContentWrapper
+                onClose={handleClose1}
+                variant="success"
+                message="Feature 1 is enabled"
+              />
+            </Snackbar>
+          </div>
+        )
+      }
 
       <div className="button-container">
         <Button onClick={handleClick2} variant="contained" color="primary">
@@ -72,7 +76,7 @@ function App() {
           <SnackbarContentWrapper
             onClose={handleClose2}
             variant="info"
-            message="Feature 2 in variant 1"
+            message={`Feature 2 in variant ${featureToggles.secondFeatureVariant}`}
           />
         </Snackbar>
       </div>
