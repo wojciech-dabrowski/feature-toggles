@@ -14,7 +14,8 @@ namespace FeatureToggles.WebApi.Controllers
 
         public ResourceController(
             IOptionsSnapshot<FeatureToggleOptions> featureToggles,
-            SecondFeatureBusinessLogicClass secondFeatureBusinessLogicOptions)
+            SecondFeatureBusinessLogicClass secondFeatureBusinessLogicOptions
+        )
         {
             _featureToggles = featureToggles.Value;
             _secondFeatureBusinessLogicClass = secondFeatureBusinessLogicOptions;

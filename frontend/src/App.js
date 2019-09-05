@@ -5,12 +5,32 @@ import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContentWrapper from "./SnackbarContentWrapper";
 
 function App() {
+  const firstFeatureApiUrl =
+    process.env.REACT_APP_BASE_API_URL + "resource/firstFeature";
+  const secondFeatureApiUrl =
+    process.env.REACT_APP_BASE_API_URL + "resource/secondFeature";
+
   const [openFeature1, setOpenFeature1] = React.useState(false);
   const [openFeature2, setOpenFeature2] = React.useState(false);
-  const [openFeature3, setOpenFeature3] = React.useState(false);
 
   function handleClick1() {
-    setOpenFeature1(true);
+    fetch(firstFeatureApiUrl, {
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*"
+      }
+    })
+      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          setOpenFeature1(true);
+        } else {
+          alert("API returned " + response.status + " HTTP code.");
+        }
+      })
+      .catch(error => alert(error));
   }
 
   function handleClose1() {
@@ -23,14 +43,6 @@ function App() {
 
   function handleClose2() {
     setOpenFeature2(false);
-  }
-
-  function handleClick3() {
-    setOpenFeature3(true);
-  }
-
-  function handleClose3() {
-    setOpenFeature3(false);
   }
 
   return (
@@ -55,7 +67,6 @@ function App() {
           />
         </Snackbar>
       </div>
-
       <div className="button-container">
         <Button onClick={handleClick2} variant="contained" color="primary">
           Feature 2
@@ -73,26 +84,6 @@ function App() {
             onClose={handleClose2}
             variant="info"
             message="Feature 2 in variant 1"
-          />
-        </Snackbar>
-      </div>
-      <div className="button-container">
-        <Button onClick={handleClick3} variant="contained" color="secondary">
-          Feature 3
-        </Button>
-        <Snackbar
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center"
-          }}
-          open={openFeature3}
-          autoHideDuration={4000}
-          onClose={handleClose3}
-        >
-          <SnackbarContentWrapper
-            onClose={handleClose3}
-            variant="error"
-            message="Feature 3 is disabled"
           />
         </Snackbar>
       </div>
