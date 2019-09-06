@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import SnackbarContentWrapper from "./SnackbarContentWrapper";
 
-function App() {
+function App({ featureToggles }) {
   const firstFeatureApiUrl =
     process.env.REACT_APP_BASE_API_URL + "resource/firstFeature";
   const secondFeatureApiUrl =
@@ -47,26 +47,30 @@ function App() {
 
   return (
     <div className="App">
-      <div className="button-container">
-        <Button onClick={handleClick1} variant="contained" color="default">
-          Feature 1
-        </Button>
-        <Snackbar
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center"
-          }}
-          open={openFeature1}
-          autoHideDuration={4000}
-          onClose={handleClose1}
-        >
-          <SnackbarContentWrapper
-            onClose={handleClose1}
-            variant="success"
-            message="Feature 1 is enabled"
-          />
-        </Snackbar>
-      </div>
+      {
+        featureToggles.isFirstFeatureEnabled && (
+          <div className="button-container">
+            <Button onClick={handleClick1} variant="contained" color="default">
+              Feature 1
+            </Button>
+            <Snackbar
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center"
+              }}
+              open={openFeature1}
+              autoHideDuration={4000}
+              onClose={handleClose1}
+            >
+              <SnackbarContentWrapper
+                onClose={handleClose1}
+                variant="success"
+                message="Feature 1 is enabled"
+              />
+            </Snackbar>
+          </div>
+        )
+      }
       <div className="button-container">
         <Button onClick={handleClick2} variant="contained" color="primary">
           Feature 2
@@ -83,7 +87,7 @@ function App() {
           <SnackbarContentWrapper
             onClose={handleClose2}
             variant="info"
-            message="Feature 2 in variant 1"
+            message={`Feature 2 in variant ${featureToggles.secondFeatureVariant}`}
           />
         </Snackbar>
       </div>

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore;
+﻿using System;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace FeatureToggles.WebApi
 {
@@ -9,6 +11,18 @@ namespace FeatureToggles.WebApi
 
         private static IWebHostBuilder CreateWebHostBuilder(string[] args)
             => WebHost.CreateDefaultBuilder(args)
+                      .ConfigureAppConfiguration(
+                           config =>
+                           {
+                               config.AddSystemsManager(
+                                   configureSource =>
+                                   {
+                                       configureSource.Path = "/FeatureToggleDemo";
+                                       configureSource.ReloadAfter = TimeSpan.FromMinutes(5);
+                                   }
+                               );
+                           }
+                       )
                       .UseStartup<Startup>();
     }
 }
