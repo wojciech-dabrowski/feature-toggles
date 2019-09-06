@@ -42,7 +42,6 @@ namespace FeatureToggles.WebApi
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseMvc();
-            // app.UseCors();
         }
     }
 }
