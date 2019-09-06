@@ -1,0 +1,19 @@
+﻿@using FeatureToggles.WebApi.Config
+@using Microsoft.Extensions.Options
+
+@inject IOptionsSnapshot<FeatureToggleOptions> _featureToggles
+
+<html>
+<head>
+    <title>Embedded client</title>
+    <script type="text/javascript">
+        window.FeatureToggles = @Html.Raw(_featureToggles.Value.ToJson());
+    </script>
+</head>
+<body>
+    First feature is @(_featureToggles.Value.IsFirstFeatureEnabled ? "enabled" : "disabled")
+    <button onclick="toggleMessage()">Toggle message</button>
+    <h1 id="message"></h1>
+    <script type="text/javascript" src="~/ClientScript.js"></script>
+</body>
+</html>

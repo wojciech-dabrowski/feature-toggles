@@ -38,7 +38,9 @@ namespace FeatureToggles.WebApi
                 app.UseHsts();
             }
 
+            app.UseCors(c => c.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
             app.UseMvc();
         }
     }
