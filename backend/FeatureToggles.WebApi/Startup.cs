@@ -21,19 +21,6 @@ namespace FeatureToggles.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            // services.AddCors(
-            //     options =>
-            //     {
-            //         options.AddPolicy(
-            //             options.DefaultPolicyName,
-            //             builder =>
-            //                 builder
-            //                    .AllowAnyOrigin()
-            //                    .AllowAnyMethod()
-            //                    .AllowAnyHeader()
-            //         );
-            //     }
-            // );
             services.Configure<FeatureToggleOptions>(_configuration.GetSection("FeatureToggles"));
             services.AddSingleton<SecondFeatureBusinessLogicClass>();
         }

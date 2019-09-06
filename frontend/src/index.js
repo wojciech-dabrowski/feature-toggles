@@ -7,7 +7,7 @@ import defaultFeatureToggles from "./featureToggles";
 
 const apiUrl = process.env.REACT_APP_BASE_API_URL;
 
-fetch(`${apiUrl}/api/FeatureToggles`)
+fetch(`${apiUrl}/FeatureToggles`)
   .then(response => response.json())
   .then(featureToggles => {
     ReactDOM.render(

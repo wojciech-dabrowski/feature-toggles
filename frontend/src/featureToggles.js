@@ -1,4 +1,4 @@
 export default {
-    isFirstFeatureEnabled: false,
-    secondFeatureVariant: 0
+    isFirstFeatureEnabled: true,
+    secondFeatureVariant: 1
 };
