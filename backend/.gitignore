@@ -245,6 +245,3 @@ ModelManifest.xml
 
 #JetBrains Rider user folders
 .idea/
-
-#AWS Lambda
-**/Properties/launchSettings.json
