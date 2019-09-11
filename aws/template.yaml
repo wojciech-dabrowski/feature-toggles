@@ -3,10 +3,6 @@ Parameters:
   EnvironmentName:
     Default: Dev
     Type: String
-    AllowedValues:
-      - Dev
-      - Stage
-      - Prod
 Resources:
   IsFirstFeatureEnabledParameter:
     Type: AWS::SSM::Parameter
