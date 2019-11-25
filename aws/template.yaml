@@ -1,0 +1,21 @@
+Description: Parameter store parameters
+Parameters:
+  EnvironmentName:
+    Default: Dev
+    Type: String
+Resources:
+  IsFirstFeatureEnabledParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      AllowedPattern: "^([Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee])$"
+      Name: !Sub "/FeatureToggleDemo/${EnvironmentName}/IsFirstFeatureEnabled"
+      Tier: Standard
+      Type: String
+      Value: false
+  SecondFeatureVariantParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/FeatureToggleDemo/${EnvironmentName}/SecondFeatureVariant"
+      Tier: Standard
+      Type: String
+      Value: Second
